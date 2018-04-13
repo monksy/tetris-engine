@@ -11,7 +11,7 @@ object ArrayOperations {
     * @tparam T The type of the board.
     * @return Returns true if the pieces would not be able to fit. False if they're good
     */
-  def hasConflict[T](boardOffset:Int, board:Array[T])(compare: Array[T], position:Int): Boolean = {
+  def hasConflict[T](boardOffset:Int, board:Array[T], compare: Array[T])(position:Int): Boolean = {
     !canMerge(compare(position), board(boardOffset+position))
   }
 
