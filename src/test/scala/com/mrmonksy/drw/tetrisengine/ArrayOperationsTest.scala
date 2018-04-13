@@ -72,5 +72,88 @@ class ArrayOperationsTest extends WordSpec with Matchers {
     }
   }
 
+  "TetrisBoard::mergeBlock" should {
+    "mergeABlock without any conflict checking" in {
+      val board = List(
+        Array[Integer](null, null, 2, null),
+        Array[Integer](1, null, null, 3)
+      )
+      val piece = List(
+        Array[Integer](6),
+        Array[Integer](6)
+      )
+
+      val expected = List(
+        Array[Integer](null, 6, 2, null),
+        Array[Integer](1, 6, null, 3)
+      )
+
+      val actual = ArrayOperations.mergeBlock(board, piece, (1, 0), (l: Integer, r: Integer) => true)
+
+      //This is flattened because deep collections aren't compared correctly in scalatest
+      actual.flatten should be(expected.flatten)
+    }
+    "mergeABlock with conflict checking" in {
+      val board = List(
+        Array[Integer](null, null, 2, null),
+        Array[Integer](1, null, null, 3)
+      )
+      val piece = List(
+        Array[Integer](6),
+        Array[Integer](6)
+      )
+
+      val expected = List(
+        Array[Integer](null, 6, 2, null),
+        Array[Integer](1, 6, null, 3)
+      )
+
+      val actual = ArrayOperations.mergeBlock(board, piece, (1, 0), ArrayOperations.canMerge)
+
+      //This is flattened because deep collections aren't compared correctly in scalatest
+      actual.flatten should be(expected.flatten)
+    }
+    "Fail to merge a block due to conflict checking" in {
+      val board = List(
+        Array[Integer](null, null, 2, null),
+        Array[Integer](1, null, null, 3)
+      )
+      val piece = List(
+        Array[Integer](6),
+        Array[Integer](6)
+      )
+
+      val expected = List(
+        Array[Integer](null, 6, 2, null),
+        Array[Integer](1, 6, null, 3)
+      )
+
+      an[IllegalArgumentException] should be thrownBy
+        ArrayOperations.mergeBlock(board, piece, (1, 0), (l: Integer, r: Integer) => false)
+
+    }
+    "merge a block with a starting at a position of 1" in {
+      val board = List(
+        Array[Integer](null, -1, 2, null),
+        Array[Integer](null, null, 2, null),
+        Array[Integer](1, null, null, 3)
+      )
+      val piece = List(
+        Array[Integer](6),
+        Array[Integer](6, 6)
+      )
+
+      val expected = List(
+        Array[Integer](null, -1, 2, null),
+        Array[Integer](null, 6, 2, null),
+        Array[Integer](1, 6, 6, 3)
+      )
+
+      val actual = ArrayOperations.mergeBlock(board, piece, (1, 1), ArrayOperations.canMerge)
+
+      //This is flattened because deep collections aren't compared correctly in scalatest
+      actual.flatten should be(expected.flatten)
+    }
+  }
 
 }

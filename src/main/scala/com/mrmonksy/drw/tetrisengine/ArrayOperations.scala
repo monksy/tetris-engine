@@ -56,4 +56,22 @@ object ArrayOperations {
     src
   }
 
+  /**
+    * This attempts to merge the entire block.
+    *
+    * Note this is a dagerous method. This will overwrite data until there is a conflict or it is done.
+    *
+    * @param board The board where the pieces will be put on
+    * @param piece The piece that will be placed on the board
+    * @param piecePlacement The top height where the piece will be placed.
+    * @param preMergeCheck The check to validate that the piece can be merged on without a conflict. (This is a safeguard)
+    * @tparam T The type that is used.
+    * @return Returns the board reference.
+    */
+  def mergeBlock[T](board: List[Array[T]], piece: List[Array[T]], piecePlacement:(Int,Int), preMergeCheck: (T, T) => Boolean): List[Array[T]] = {
+    (0 to piece.length-1).foreach(curPiecePos=>
+      mergeLine(board(piecePlacement._2+ curPiecePos), piece(curPiecePos), piecePlacement._1, preMergeCheck)
+    )
+    board
+  }
 }
