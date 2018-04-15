@@ -280,6 +280,79 @@ class TetrisBoardTest extends WordSpec with Matchers {
       actualHeight should be(expectedHeight)
     }
 
+    "Functional Test: 1: I0,4Q8" in {
+      val instance = new TetrisBoard[Character](10)
+
+      instance.addPiece(Shapes.PIPE, 0)
+      instance.addPiece(Shapes.PIPE, 4)
+      instance.addPiece(Shapes.CUBE, 8)
+
+      val expected = 1
+      val expectedBoard = List(
+        Array[Character](null, null, null, null, null, null, null, null, 'Q', 'Q')
+      )
+      val actualBoard = instance.getBoard()
+
+      val actual = instance.height()
+
+      instance.printBoard()
+
+      actual should be(expected)
+      actualBoard.flatten should be(expectedBoard.flatten)
+    }
+
+    "Functional Test: 2:  T1,Z3,I4" in {
+      val instance = new TetrisBoard[Character](10)
+
+      instance.addPiece(Shapes.UPSIDEDOWN_TRIANGLE, 1)
+      instance.addPiece(Shapes.Z_SHAPE, 3)
+      instance.addPiece(Shapes.PIPE, 4)
+
+      val expected = 4
+      val expectedBoard = List(
+        Array[Character](null, null, null, null, 'I', 'I', 'I', 'I', null, null),
+        Array[Character](null, null, null, 'Z', 'Z', null, null, null, null, null),
+        Array[Character](null, 'T', 'T', 'T', 'Z', 'Z', null, null, null, null),
+        Array[Character](null, null, 'T', null, null, null, null, null, null, null)
+      )
+      val actualBoard = instance.getBoard()
+
+      val actual = instance.height()
+
+      instance.printBoard()
+
+      actual should be(expected)
+      actualBoard.flatten should be(expectedBoard.flatten)
+    }
+
+    "Functional Test: 3:  Q0,I2,I6,I0,I6,I6,Q2,Q4" in {
+      val instance = new TetrisBoard[Character](10)
+
+      instance.addPiece(Shapes.CUBE, 0)
+      instance.addPiece(Shapes.PIPE, 2)
+      instance.addPiece(Shapes.PIPE, 6)
+      instance.addPiece(Shapes.PIPE, 0)
+      instance.addPiece(Shapes.PIPE, 6)
+      instance.addPiece(Shapes.PIPE, 6)
+      instance.addPiece(Shapes.CUBE, 2)
+      instance.addPiece(Shapes.CUBE, 4)
+
+      val expected = 3
+
+      val expectedBoard = List(
+        Array[Character](null, null, 'Q', 'Q', null, null, null, null, null, null),
+        Array[Character](null, null, 'Q', 'Q', null, null, null, null, null, null),
+        Array[Character]('Q', 'Q', null, null, 'Q', 'Q', 'I', 'I', 'I', 'I')
+      )
+      val actualBoard = instance.getBoard()
+      val actual = instance.height()
+
+      instance.printBoard()
+
+      actual should be(expected)
+      actualBoard.flatten should be(expectedBoard.flatten)
+    }
+
 
   }
 }

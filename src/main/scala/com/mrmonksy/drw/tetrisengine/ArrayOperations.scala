@@ -40,15 +40,18 @@ object ArrayOperations {
     *
     */
   def mergeLine[T](src: Array[T], piece: Array[T], boardOffset: Int, preMergeCheck: (T, T) => Boolean): Array[T] = {
-    (boardOffset to (boardOffset + piece.length-1)).foreach(pos => {
+    (boardOffset to (boardOffset + piece.length - 1)).foreach(pos => {
       val left = src(pos)
       val piecePos = pos - boardOffset
       val right = piece(piecePos)
 
-      if (preMergeCheck(left, right)) {
-        src.update(pos, right)
-      } else {
-        throw new IllegalArgumentException(s"The piece (${piece.mkString(",")}) could not be written into the array at $pos/$piecePos due to a conflict with the following values ($left, $right)")
+      //If we're dealing with something that isn't null, lets do a replace.
+      if (right != null) {
+        if (preMergeCheck(left, right)) {
+          src.update(pos, right)
+        } else {
+          throw new IllegalArgumentException(s"The piece (${piece.mkString(",")}) could not be written into the array at $pos/$piecePos due to a conflict with the following values ($left, $right)")
+        }
       }
     }
     )
@@ -61,16 +64,16 @@ object ArrayOperations {
     *
     * Note this is a dagerous method. This will overwrite data until there is a conflict or it is done.
     *
-    * @param board The board where the pieces will be put on
-    * @param piece The piece that will be placed on the board
+    * @param board          The board where the pieces will be put on
+    * @param piece          The piece that will be placed on the board
     * @param piecePlacement The top height where the piece will be placed.
-    * @param preMergeCheck The check to validate that the piece can be merged on without a conflict. (This is a safeguard)
+    * @param preMergeCheck  The check to validate that the piece can be merged on without a conflict. (This is a safeguard)
     * @tparam T The type that is used.
     * @return Returns the board reference.
     */
-  def mergeBlock[T](board: List[Array[T]], piece: List[Array[T]], piecePlacement:(Int,Int), preMergeCheck: (T, T) => Boolean): List[Array[T]] = {
-    (0 to piece.length-1).foreach(curPiecePos=>
-      mergeLine(board(piecePlacement._2+ curPiecePos), piece(curPiecePos), piecePlacement._1, preMergeCheck)
+  def mergeBlock[T](board: List[Array[T]], piece: List[Array[T]], piecePlacement: (Int, Int), preMergeCheck: (T, T) => Boolean): List[Array[T]] = {
+    (0 to piece.length - 1).foreach(curPiecePos =>
+      mergeLine(board(piecePlacement._2 + curPiecePos), piece(curPiecePos), piecePlacement._1, preMergeCheck)
     )
     board
   }

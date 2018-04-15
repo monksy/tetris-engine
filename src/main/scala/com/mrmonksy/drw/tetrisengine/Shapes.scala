@@ -1,41 +1,41 @@
 package com.mrmonksy.drw.tetrisengine
 
 object Shapes {
-  val CUBE = Array(
-    Array('Q', 'Q'),
-    Array('Q', 'Q')
+  val CUBE = List(
+    Array[Character]('Q', 'Q'),
+    Array[Character]('Q', 'Q')
   )
 
-  val Z_SHAPE = Array(
-    Array('Z', 'Z', null),
-    Array(null, 'Z', 'Z')
+  val Z_SHAPE = List(
+    Array[Character]('Z', 'Z', null),
+    Array[Character](null, 'Z', 'Z')
   )
 
-  val S_SHAPE = Array(
-    Array(null, 'S', 'S'),
-    Array('S', 'S', null)
+  val S_SHAPE = List(
+    Array[Character](null, 'S', 'S'),
+    Array[Character]('S', 'S', null)
 
   )
 
-  val UPSIDEDOWN_TRIANGLE = Array(
-    Array('T', 'T', 'T'),
-    Array(null, 'T', null)
+  val UPSIDEDOWN_TRIANGLE = List(
+    Array[Character]('T', 'T', 'T'),
+    Array[Character](null, 'T', null)
   )
 
-  val PIPE = Array(
-    Array('I', 'I', 'I', 'I')
+  val PIPE = List(
+    Array[Character]('I', 'I', 'I', 'I')
   )
 
-  val BIG_L = Array(
-    Array('L', null),
-    Array('L', null),
-    Array('L', 'L')
+  val BIG_L = List(
+    Array[Character]('L', null),
+    Array[Character]('L', null),
+    Array[Character]('L', 'L')
   )
 
-  val BACKWARD_L = Array(
-    Array(null, 'J'),
-    Array(null, 'J'),
-    Array('J', 'J')
+  val BACKWARD_L = List(
+    Array[Character](null, 'J'),
+    Array[Character](null, 'J'),
+    Array[Character]('J', 'J')
   )
 
   val mapping = Map("Q" -> CUBE,

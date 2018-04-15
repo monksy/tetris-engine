@@ -70,6 +70,15 @@ class ArrayOperationsTest extends WordSpec with Matchers {
 
       the[IllegalArgumentException] thrownBy ArrayOperations.mergeLine(board, piece, 1, (l: Integer, r: Integer) => false)
     }
+
+    "Merge items with the piece having a null" in {
+      val board = Array[Integer](1, null, null, 1)
+      val piece = Array[Integer](null, 2, 2)
+      val expected = Array[Integer](1, 2, 2, 1)
+      val actual = ArrayOperations.mergeLine(board, piece, 0, (l: Integer, r: Integer) => true)
+
+      actual should be(expected)
+    }
   }
 
   "TetrisBoard::mergeBlock" should {
