@@ -8,7 +8,7 @@ class TetrisBoardTest extends WordSpec with Matchers {
   "TetrisBoard::height" should {
     "Start with 0 height" in {
       val expected = 0
-      val instance = new TetrisBoard[Int](5)
+      val instance = new TetrisBoard[Integer](5)
       val actual = instance.height()
 
       actual should be(expected)
@@ -209,4 +209,77 @@ class TetrisBoardTest extends WordSpec with Matchers {
 
   }
 
+  val THREE_FLAT_PIECE = List(
+    Array[Integer](1, 1, 1)
+  )
+
+  val SINGLE_DOT_PIECE = List(Array[Integer](2))
+
+  "TetrisBoard::addPiece" should {
+    "Add a simple flat THREE_FLAT_PIECE to the board" in {
+      val instance = new TetrisBoard[Integer](5)
+
+      instance.addPiece(THREE_FLAT_PIECE, 0)
+      val expected = List(
+        Array(1, 1, 1, null, null)
+      )
+      val expectedHeight = 1
+
+      val actual = instance.getBoard()
+      val actualHeight = instance.height()
+      instance.printBoard()
+
+
+      actual.flatten should be(expected.flatten)
+      actualHeight should be(expectedHeight)
+    }
+
+    "Add a simple flat THREE_FLAT_PIECE with overloay" in {
+      val instance = new TetrisBoard[Integer](5)
+
+      instance.addPiece(THREE_FLAT_PIECE, 0)
+      instance.addPiece(THREE_FLAT_PIECE, 1)
+      val expected = List(
+        Array(null, 1, 1, 1, null),
+        Array(1, 1, 1, null, null)
+      )
+      val expectedHeight = 2
+
+      val actual = instance.getBoard()
+      val actualHeight = instance.height()
+
+      instance.printBoard()
+
+
+      actual.flatten should be(expected.flatten)
+      actualHeight should be(expectedHeight)
+    }
+
+
+    "Add some overlay, 3 flats" in {
+      val instance = new TetrisBoard[Integer](5)
+
+      instance.addPiece(THREE_FLAT_PIECE, 0)
+      instance.addPiece(THREE_FLAT_PIECE, 1)
+      instance.addPiece(SINGLE_DOT_PIECE, 4)
+      instance.addPiece(THREE_FLAT_PIECE, 2)
+
+      val expected = List(
+        Array(null, null, 1, 1, 1),
+        Array(null, 1, 1, 1, null),
+        Array(1, 1, 1, null, 2)
+      )
+      val expectedHeight = 3
+
+      val actual = instance.getBoard()
+      val actualHeight = instance.height()
+
+      instance.printBoard()
+
+      actual.flatten should be(expected.flatten)
+      actualHeight should be(expectedHeight)
+    }
+
+
+  }
 }

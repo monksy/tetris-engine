@@ -2,10 +2,10 @@ package com.mrmonksy.drw.tetrisengine
 
 import java.util.logging.Logger
 
-import scala.collection.mutable
+import scala.reflect.ClassTag
 
-class TetrisBoard[T](width: Int) {
-  private var board = mutable.MutableList[Array[T]]()
+class TetrisBoard[T >: Null](width: Int) {
+  private var board = List[Array[T]]()
   private val LOG = Logger.getLogger(this.getClass.toString)
 
   /**
@@ -15,7 +15,7 @@ class TetrisBoard[T](width: Int) {
     */
   def this(initialBoard: List[Array[T]]) {
     this(initialBoard.head.length)
-    board = mutable.MutableList(initialBoard: _*)
+    board = initialBoard
   }
 
   def height(): Int = board.length
@@ -37,10 +37,12 @@ class TetrisBoard[T](width: Int) {
   def printBoard() = {
 
     println("---- Tetris Board State ----")
-    println(board.map(c => s"| ${c.mkString(" ")} |").mkString(System.lineSeparator()))
+    println(board.map(c => s"| ${c.map(v => if (v == null) " " else v.toString).mkString(" ")} |").mkString(System.lineSeparator()))
 
   }
 
+
+  def getBoard(): List[Array[T]] = board
 
   /**
     * This starts at the top and tries to find the best fit for the piece given.
@@ -69,5 +71,35 @@ class TetrisBoard[T](width: Int) {
 
     //The last item on this is the lowest best fit
     endOfStream.last._1
+  }
+
+  /**
+    * This adds a piece to the board.
+    *
+    * @param piece   The piece to be added
+    * @param hOffset Horiztontal offset where the piece is placed.
+    * @return Returns the placement of the piece on the board.
+    */
+  def addPiece(piece: List[Array[T]], hOffset: Int)(implicit m: ClassTag[T]): Int = {
+    //Add spacers
+    (1 to piece.length).foreach(c => addLine())
+
+    //Find best placement
+    val placement = findBestFit(piece, hOffset)
+
+    //Merge block
+    ArrayOperations.mergeBlock(board, piece, (hOffset, placement), ArrayOperations.canMerge)
+
+    //Remove filled lines and empty ones
+    board = board.filterNot(_.forall(_ == null))
+
+    //Remove all lines that are full as well
+    board = board.filter(_.exists(i => i == null))
+
+    placement
+  }
+
+  private def addLine()(implicit m: ClassTag[T]): Unit = {
+    board = new Array[T](width) :: board
   }
 }
