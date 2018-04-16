@@ -35,10 +35,8 @@ class TetrisBoard[T >: Null](width: Int) {
   }
 
   def printBoard() = {
-
     println("---- Tetris Board State ----")
     println(board.map(c => s"| ${c.map(v => if (v == null) " " else v.toString).mkString(" ")} |").mkString(System.lineSeparator()))
-
   }
 
 

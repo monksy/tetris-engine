@@ -14,24 +14,26 @@ object App {
     val INPUT_HANDLER = """(\w)(\d+)""".r
 
 
-    while (true) {
+    do {
       println("Please insert your block selection: ")
       input = scala.io.StdIn.readLine()
 
-      val items = input.split(",")
-      val tetrisBoard = new TetrisBoard[Character](10)
-      items.foreach(i => {
-        val INPUT_HANDLER(piece, placement) = i.trim
-        tetrisBoard.addPiece(Shapes.mapping(piece), placement.toInt)
-        if (isVerbose) {
-          tetrisBoard.printBoard()
-        }
+      if (input != null) {
+        val items = input.split(",")
+        val tetrisBoard = new TetrisBoard[Character](10)
+        items.foreach(i => {
+          val INPUT_HANDLER(piece, placement) = i.trim
+          tetrisBoard.addPiece(Shapes.mapping(piece), placement.toInt)
+          if (isVerbose) {
+            tetrisBoard.printBoard()
+          }
 
+
+        }
+        )
         println(tetrisBoard.height())
       }
-      )
-
-    }
+    } while (input != null)
   }
 
 }

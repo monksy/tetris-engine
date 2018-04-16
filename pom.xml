@@ -6,20 +6,13 @@
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>My wonderfull scala app</description>
-    <inceptionYear>2015</inceptionYear>
-    <licenses>
-        <license>
-            <name>My License</name>
-            <url>http://....</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+    <inceptionYear>2018</inceptionYear>
 
     <properties>
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <encoding>UTF-8</encoding>
-        <scala.version>${scala.compat.version}.5</scala.version>
+        <scala.version>${scala.compat.version}.4</scala.version>
         <scala.compat.version>2.12</scala.compat.version>
         <scoverage.plugin.version>1.3.0</scoverage.plugin.version>
     </properties>
@@ -50,23 +43,6 @@
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.scoverage</groupId>
-                <artifactId>scoverage-maven-plugin</artifactId>
-                <version>${scoverage.plugin.version}</version>
-                <configuration>
-                    <minimumCoverage>99</minimumCoverage>
-                    <failOnMinimumCoverage>true</failOnMinimumCoverage>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal> <!-- or integration-check -->
-                        </goals>
-                        <phase>prepare-package</phase> <!-- or any other phase -->
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -102,6 +78,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -112,10 +89,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <!-- see http://davidb.github.com/scala-maven-plugin -->
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.2</version>
                 <executions>
                     <execution>
                         <goals>
@@ -146,6 +122,23 @@
                         <goals>
                             <goal>test</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.scoverage</groupId>
+                <artifactId>scoverage-maven-plugin</artifactId>
+                <version>${scoverage.plugin.version}</version>
+                <configuration>
+                    <minimumCoverage>86</minimumCoverage>
+                    <failOnMinimumCoverage>true</failOnMinimumCoverage>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal> <!-- or integration-check -->
+                        </goals>
+                        <phase>prepare-package</phase> <!-- or any other phase -->
                     </execution>
                 </executions>
             </plugin>
