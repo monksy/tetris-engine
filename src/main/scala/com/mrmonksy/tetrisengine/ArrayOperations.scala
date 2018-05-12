@@ -1,4 +1,4 @@
-package com.mrmonksy.drw.tetrisengine
+package com.mrmonksy.tetrisengine
 
 object ArrayOperations {
 
@@ -27,9 +27,7 @@ object ArrayOperations {
   def canMerge[T](left: T, right: T) = left == null || right == null
 
   /**
-    * This merges the piece into the src array. This is a dangerous merge. Also, if there is an item that fails the merge, the array will remain modified up until the failure.
-    *
-    * THIS METHOD IS D*A*N*G*E*R*O*U*S It will modify the src array.
+    * This merges the piece into the src array. Also, if there is an item that fails the merge, the array will remain modified up until the failure.
     *
     * @param src   Source of the array to modify.
     * @param piece The piece to merge in.
@@ -40,7 +38,7 @@ object ArrayOperations {
     *
     */
   def mergeLine[T](src: Array[T], piece: Array[T], boardOffset: Int, preMergeCheck: (T, T) => Boolean): Array[T] = {
-    (boardOffset to (boardOffset + piece.length - 1)).foreach(pos => {
+    (boardOffset until boardOffset + piece.length).foreach(pos => {
       val left = src(pos)
       val piecePos = pos - boardOffset
       val right = piece(piecePos)
@@ -72,7 +70,7 @@ object ArrayOperations {
     * @return Returns the board reference.
     */
   def mergeBlock[T](board: List[Array[T]], piece: List[Array[T]], piecePlacement: (Int, Int), preMergeCheck: (T, T) => Boolean): List[Array[T]] = {
-    (0 to piece.length - 1).foreach(curPiecePos =>
+    piece.indices.foreach(curPiecePos =>
       mergeLine(board(piecePlacement._2 + curPiecePos), piece(curPiecePos), piecePlacement._1, preMergeCheck)
     )
     board

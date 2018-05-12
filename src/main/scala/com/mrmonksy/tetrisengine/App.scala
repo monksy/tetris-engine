@@ -1,8 +1,5 @@
-package com.mrmonksy.drw.tetrisengine
+package com.mrmonksy.tetrisengine
 
-/**
-  * @author ${user.name}
-  */
 object App {
 
   def main(args: Array[String]) {
@@ -25,7 +22,7 @@ object App {
           val INPUT_HANDLER(piece, placement) = i.trim
           tetrisBoard.addPiece(Shapes.mapping(piece), placement.toInt)
           if (isVerbose) {
-            tetrisBoard.printBoard()
+            println(tetrisBoard.toString())
           }
 
 

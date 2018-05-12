@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mrmonksy.drw.tetrisengine</groupId>
+    <groupId>com.mrmonksy.tetrisengine</groupId>
     <artifactId>tetris-engine</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
@@ -65,7 +65,7 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>com.mrmonksy.drw.tetrisengine.App</Main-Class>
+                                        <Main-Class>com.mrmonksy.tetrisengine.App</Main-Class>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>
@@ -83,7 +83,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.mrmonksy.drw.tetrisengine.App</mainClass>
+                            <mainClass>com.mrmonksy.tetrisengine.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -130,7 +130,7 @@
                 <artifactId>scoverage-maven-plugin</artifactId>
                 <version>${scoverage.plugin.version}</version>
                 <configuration>
-                    <minimumCoverage>86</minimumCoverage>
+                    <minimumCoverage>81</minimumCoverage>
                     <failOnMinimumCoverage>true</failOnMinimumCoverage>
                 </configuration>
                 <executions>

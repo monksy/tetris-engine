@@ -1,4 +1,4 @@
-package com.mrmonksy.drw.tetrisengine
+package com.mrmonksy.tetrisengine
 
 import java.util.logging.Logger
 
@@ -9,9 +9,9 @@ class TetrisBoard[T >: Null](width: Int) {
   private val LOG = Logger.getLogger(this.getClass.toString)
 
   /**
-    * This is used for testing and setting an inital board state
+    * This is used for testing and setting an initial board state
     *
-    * @param initialBoard The inital board state.
+    * @param initialBoard The initial board state.
     */
   def this(initialBoard: List[Array[T]]) {
     this(initialBoard.head.length)
@@ -31,16 +31,18 @@ class TetrisBoard[T >: Null](width: Int) {
   def doesBlockFit(pieceLine: Array[T], boardOffset: Int, vHeight: Int): Boolean = {
     LOG.fine(s"doesBlockFit: boardOffset: $boardOffset, height: $vHeight, piece: [${pieceLine.mkString(",")}]")
     val hasConflictOnBoard = ArrayOperations.hasConflict(boardOffset, board(vHeight), pieceLine)(_)
-    (0 to pieceLine.length - 1).forall(i => !hasConflictOnBoard(i))
+    pieceLine.indices.forall(i => !hasConflictOnBoard(i))
   }
 
-  def printBoard() = {
-    println("---- Tetris Board State ----")
-    println(board.map(c => s"| ${c.map(v => if (v == null) " " else v.toString).mkString(" ")} |").mkString(System.lineSeparator()))
+  override def toString: String = {
+    val sb = new StringBuilder("---- Tetris Board State ----")
+
+    sb.append(board.map(c => s"| ${c.map(v => if (v == null) " " else v.toString).mkString(" ")} |").mkString(System.lineSeparator()))
+    sb.toString()
   }
 
 
-  def getBoard(): List[Array[T]] = board
+  def getBoard: List[Array[T]] = board
 
   /**
     * This starts at the top and tries to find the best fit for the piece given.
@@ -63,7 +65,7 @@ class TetrisBoard[T >: Null](width: Int) {
     val pieceHeight = piece.length - 1
 
     //Lets start the stream and then build it out with the pieces to go up the piece array
-    val fullStream = (pieceHeight to board.length - 1).map(i => (i, false)).toStream
+    val fullStream = (pieceHeight until board.length).map(i => (i, false)).toStream
     val startOfStream = fullStream.map(itm => (itm._1, doesBlockFit(piece(pieceHeight), horOffsite, itm._1))).takeWhile(_._2)
     val endOfStream = (1 to pieceHeight).foldLeft(startOfStream)((r, i) => buildOnStream(r, i))
 
@@ -75,12 +77,12 @@ class TetrisBoard[T >: Null](width: Int) {
     * This adds a piece to the board.
     *
     * @param piece   The piece to be added
-    * @param hOffset Horiztontal offset where the piece is placed.
+    * @param hOffset Horizontal offset where the piece is placed.
     * @return Returns the placement of the piece on the board.
     */
   def addPiece(piece: List[Array[T]], hOffset: Int)(implicit m: ClassTag[T]): Int = {
     //Add spacers
-    (1 to piece.length).foreach(c => addLine())
+    (1 to piece.length).foreach(_ => addLine())
 
     //Find best placement
     val placement = findBestFit(piece, hOffset)

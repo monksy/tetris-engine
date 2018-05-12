@@ -1,4 +1,4 @@
-package com.mrmonksy.drw.tetrisengine
+package com.mrmonksy.tetrisengine
 
 import org.scalatest.{Matchers, WordSpec}
 
@@ -225,10 +225,8 @@ class TetrisBoardTest extends WordSpec with Matchers {
       )
       val expectedHeight = 1
 
-      val actual = instance.getBoard()
+      val actual = instance.getBoard
       val actualHeight = instance.height()
-      instance.printBoard()
-
 
       actual.flatten should be(expected.flatten)
       actualHeight should be(expectedHeight)
@@ -245,10 +243,9 @@ class TetrisBoardTest extends WordSpec with Matchers {
       )
       val expectedHeight = 2
 
-      val actual = instance.getBoard()
+      val actual = instance.getBoard
       val actualHeight = instance.height()
 
-      instance.printBoard()
 
 
       actual.flatten should be(expected.flatten)
@@ -271,10 +268,8 @@ class TetrisBoardTest extends WordSpec with Matchers {
       )
       val expectedHeight = 3
 
-      val actual = instance.getBoard()
+      val actual = instance.getBoard
       val actualHeight = instance.height()
-
-      instance.printBoard()
 
       actual.flatten should be(expected.flatten)
       actualHeight should be(expectedHeight)
@@ -291,11 +286,9 @@ class TetrisBoardTest extends WordSpec with Matchers {
       val expectedBoard = List(
         Array[Character](null, null, null, null, null, null, null, null, 'Q', 'Q')
       )
-      val actualBoard = instance.getBoard()
+      val actualBoard = instance.getBoard
 
       val actual = instance.height()
-
-      instance.printBoard()
 
       actual should be(expected)
       actualBoard.flatten should be(expectedBoard.flatten)
@@ -315,11 +308,9 @@ class TetrisBoardTest extends WordSpec with Matchers {
         Array[Character](null, 'T', 'T', 'T', 'Z', 'Z', null, null, null, null),
         Array[Character](null, null, 'T', null, null, null, null, null, null, null)
       )
-      val actualBoard = instance.getBoard()
+      val actualBoard = instance.getBoard
 
       val actual = instance.height()
-
-      instance.printBoard()
 
       actual should be(expected)
       actualBoard.flatten should be(expectedBoard.flatten)
@@ -344,10 +335,8 @@ class TetrisBoardTest extends WordSpec with Matchers {
         Array[Character](null, null, 'Q', 'Q', null, null, null, null, null, null),
         Array[Character]('Q', 'Q', null, null, 'Q', 'Q', 'I', 'I', 'I', 'I')
       )
-      val actualBoard = instance.getBoard()
+      val actualBoard = instance.getBoard
       val actual = instance.height()
-
-      instance.printBoard()
 
       actual should be(expected)
       actualBoard.flatten should be(expectedBoard.flatten)

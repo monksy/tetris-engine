@@ -82,7 +82,7 @@ If you are using the verbose mode (-v command line argument) you will see the ga
 
 ## Notes
 
-### Going beyond the specifications
+### Features of this implementation
   
 A few things where this went beyond the ask of the requirements: 
 

@@ -1,4 +1,4 @@
-package com.mrmonksy.drw.tetrisengine
+package com.mrmonksy.tetrisengine
 
 import org.scalatest.{Matchers, WordSpec}
 
@@ -59,7 +59,7 @@ class ArrayOperationsTest extends WordSpec with Matchers {
       val board = Array[Integer](1, null, null, 1)
       val piece = Array[Integer](2, 2)
       val expected = Array[Integer](1, 2, 2, 1)
-      val actual = ArrayOperations.mergeLine(board, piece, 1, (l: Integer, r: Integer) => true)
+      val actual = ArrayOperations.mergeLine(board, piece, 1, (_: Integer, _: Integer) => true)
 
       actual should be(expected)
     }
@@ -68,14 +68,14 @@ class ArrayOperationsTest extends WordSpec with Matchers {
       val board = Array[Integer](1, null, null, 1)
       val piece = Array[Integer](2, 2)
 
-      the[IllegalArgumentException] thrownBy ArrayOperations.mergeLine(board, piece, 1, (l: Integer, r: Integer) => false)
+      the[IllegalArgumentException] thrownBy ArrayOperations.mergeLine(board, piece, 1, (_: Integer, _: Integer) => false)
     }
 
     "Merge items with the piece having a null" in {
       val board = Array[Integer](1, null, null, 1)
       val piece = Array[Integer](null, 2, 2)
       val expected = Array[Integer](1, 2, 2, 1)
-      val actual = ArrayOperations.mergeLine(board, piece, 0, (l: Integer, r: Integer) => true)
+      val actual = ArrayOperations.mergeLine(board, piece, 0, (_: Integer, _: Integer) => true)
 
       actual should be(expected)
     }
@@ -97,7 +97,7 @@ class ArrayOperationsTest extends WordSpec with Matchers {
         Array[Integer](1, 6, null, 3)
       )
 
-      val actual = ArrayOperations.mergeBlock(board, piece, (1, 0), (l: Integer, r: Integer) => true)
+      val actual = ArrayOperations.mergeBlock(board, piece, (1, 0), (_: Integer, _: Integer) => true)
 
       //This is flattened because deep collections aren't compared correctly in scalatest
       actual.flatten should be(expected.flatten)
@@ -132,13 +132,8 @@ class ArrayOperationsTest extends WordSpec with Matchers {
         Array[Integer](6)
       )
 
-      val expected = List(
-        Array[Integer](null, 6, 2, null),
-        Array[Integer](1, 6, null, 3)
-      )
-
       an[IllegalArgumentException] should be thrownBy
-        ArrayOperations.mergeBlock(board, piece, (1, 0), (l: Integer, r: Integer) => false)
+        ArrayOperations.mergeBlock(board, piece, (1, 0), (_: Integer, _: Integer) => false)
 
     }
     "merge a block with a starting at a position of 1" in {
